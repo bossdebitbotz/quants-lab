@@ -12,6 +12,8 @@ services:
     image: hummingbot/quants-lab:latest
     volumes:
       - .:/quants-lab
+    deploy:
+      replicas: 10
     env_file:
       - .env
     command: conda run --no-capture-output -n quants-lab python3 tasks/backtesting_runner.py
