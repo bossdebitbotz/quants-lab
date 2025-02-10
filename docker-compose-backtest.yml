@@ -1,0 +1,17 @@
+services:
+  timescaledb_backtest:
+    image: timescale/timescaledb:latest-pg14
+    container_name: timescaledb_backtest
+    environment:
+      - POSTGRES_USER=backtest_user
+      - POSTGRES_PASSWORD=backtest_password
+      - POSTGRES_DB=backtest_db
+    ports:
+      - "5433:5432"  # Note: Using port 5433 on host to avoid conflict
+    volumes:
+      - timescale_backtest_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  timescale_backtest_data:
+    driver: local 
