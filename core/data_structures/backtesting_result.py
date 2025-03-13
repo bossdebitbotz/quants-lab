@@ -32,11 +32,19 @@ class BacktestingResult(DataStructureBase):
         total_executors = results["total_executors"]
         accuracy_long = results["accuracy_long"]
         accuracy_short = results["accuracy_short"]
-        take_profit = results["close_types"].get("TAKE_PROFIT", 0)
-        stop_loss = results["close_types"].get("STOP_LOSS", 0)
-        time_limit = results["close_types"].get("TIME_LIMIT", 0)
-        trailing_stop = results["close_types"].get("TRAILING_STOP", 0)
-        early_stop = results["close_types"].get("EARLY_STOP", 0)
+        
+        # Handle close_types safely
+        close_types = results.get("close_types", {})
+        if isinstance(close_types, dict):
+            take_profit = close_types.get("TAKE_PROFIT", 0)
+            stop_loss = close_types.get("STOP_LOSS", 0)
+            time_limit = close_types.get("TIME_LIMIT", 0)
+            trailing_stop = close_types.get("TRAILING_STOP", 0)
+            early_stop = close_types.get("EARLY_STOP", 0)
+        else:
+            # If close_types is not a dictionary, default all values to 0
+            take_profit = stop_loss = time_limit = trailing_stop = early_stop = 0
+        
         return f"""
 Net PNL: ${net_pnl_quote:.2f} ({net_pnl_pct*100:.2f}%) | Max Drawdown: ${max_drawdown:.2f} ({max_drawdown_pct*100:.2f}%)
 Total Volume ($): {total_volume:.2f} | Sharpe Ratio: {sharpe_ratio:.2f} | Profit Factor: {profit_factor:.2f}

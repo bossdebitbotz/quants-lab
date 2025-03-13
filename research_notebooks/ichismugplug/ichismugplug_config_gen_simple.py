@@ -22,10 +22,10 @@ class IchimokuSmugPlugConfigGenerator(BaseStrategyConfigGenerator):
         macd_slow = trial.suggest_int("macd_slow", macd_fast + 5, 55, step=5)
         macd_signal = trial.suggest_int("macd_signal", 6, 22, step=2)
         
-        # EMA parameters (ensure short < medium < long)
-        ema_short = trial.suggest_int("ema_short", 4, 16, step=2)
-        ema_medium = trial.suggest_int("ema_medium", ema_short + 2, ema_short + 20, step=2)
-        ema_long = trial.suggest_int("ema_long", ema_medium + 2, ema_medium + 20, step=2)
+        # ZLEMA parameters (ensure short < medium < long)
+        zlema_short = trial.suggest_int("zlema_short", 4, 16, step=2)
+        zlema_medium = trial.suggest_int("zlema_medium", zlema_short + 2, zlema_short + 20, step=2)
+        zlema_long = trial.suggest_int("zlema_long", zlema_medium + 2, zlema_medium + 20, step=2)
         
         # ATR parameters
         atr_length = trial.suggest_int("atr_length", 5, 20, step=1)
@@ -41,18 +41,30 @@ class IchimokuSmugPlugConfigGenerator(BaseStrategyConfigGenerator):
         volume_ma_period = trial.suggest_int("volume_ma_period", 15, 25, step=1)  # centered around 20
         
         # Triple barrier metrics
-        take_profit = trial.suggest_float("take_profit", 0.01, 0.5, step=0.01)
-        stop_loss = trial.suggest_float("stop_loss", 0.005, 0.1, step=0.005)
-        trailing_stop_activation_price = trial.suggest_float("trailing_stop_activation_price", 0.005, 0.05, step=0.001)
-        trailing_stop_trailing_delta = trial.suggest_float("trailing_stop_trailing_delta", 0.001, 0.02, step=0.0005)
+        take_profit = trial.suggest_float("take_profit", 0.4, 0.5, step=0.1)
+        stop_loss = trial.suggest_float("stop_loss", 0.04, 0.05, step=0.01)
+        trailing_stop_activation_price = trial.suggest_float("trailing_stop_activation_price", 0.001, 0.01, step=0.001)
+        trailing_stop_trailing_delta = trial.suggest_float("trailing_stop_trailing_delta", 0.001, 0.009, step=0.0005)
         max_executors_per_side = trial.suggest_int("max_executors_per_side", 1, 5)
 
-        # Id Generation
+        # Add KST parameters
+        kst_roc1_period = trial.suggest_int("kst_roc1_period", 8, 12, step=1)
+        kst_roc2_period = trial.suggest_int("kst_roc2_period", 13, 17, step=1)
+        kst_roc3_period = trial.suggest_int("kst_roc3_period", 18, 22, step=1)
+        kst_roc4_period = trial.suggest_int("kst_roc4_period", 28, 32, step=1)
+        kst_ma1_period = trial.suggest_int("kst_ma1_period", 8, 12, step=1)
+        kst_ma2_period = trial.suggest_int("kst_ma2_period", 8, 12, step=1)
+        kst_ma3_period = trial.suggest_int("kst_ma3_period", 8, 12, step=1)
+        kst_ma4_period = trial.suggest_int("kst_ma4_period", 13, 17, step=1)
+        kst_signal_period = trial.suggest_int("kst_signal_period", 7, 11, step=1)
+
+        # Update controller_id to remove Fibonacci reference
         controller_id = (f"ichismugplug_{self.connector_name}_{interval}_{self.trading_pair}_"
                        f"macd_{macd_fast}_{macd_slow}_{macd_signal}_"
-                       f"ema_{ema_short}_{ema_medium}_{ema_long}_"
+                       f"zlema_{zlema_short}_{zlema_medium}_{zlema_long}_"
                        f"atr_{atr_length}_{atr_multiplier}_"
                        f"ichi_{tenkan_period}_{kijun_period}_{senkou_span_b_period}_"
+                       f"kst_{kst_roc1_period}_{kst_signal_period}_"
                        f"vol_{volume_ma_period}_"
                        f"sl{round(100 * stop_loss, 1)}_"
                        f"ts{round(100 * trailing_stop_activation_price, 1)}-"
@@ -68,9 +80,9 @@ class IchimokuSmugPlugConfigGenerator(BaseStrategyConfigGenerator):
             macd_fast=macd_fast,
             macd_slow=macd_slow,
             macd_signal=macd_signal,
-            ema_short=ema_short,
-            ema_medium=ema_medium,
-            ema_long=ema_long,
+            zlema_short=zlema_short,
+            zlema_medium=zlema_medium,
+            zlema_long=zlema_long,
             atr_length=atr_length,
             atr_multiplier=Decimal(atr_multiplier),
             tenkan_period=tenkan_period,
@@ -87,6 +99,15 @@ class IchimokuSmugPlugConfigGenerator(BaseStrategyConfigGenerator):
             max_executors_per_side=max_executors_per_side,
             time_limit=60 * 60 * 2,
             cooldown_time=60,
+            kst_roc1_period=kst_roc1_period,
+            kst_roc2_period=kst_roc2_period,
+            kst_roc3_period=kst_roc3_period,
+            kst_roc4_period=kst_roc4_period,
+            kst_ma1_period=kst_ma1_period,
+            kst_ma2_period=kst_ma2_period,
+            kst_ma3_period=kst_ma3_period,
+            kst_ma4_period=kst_ma4_period,
+            kst_signal_period=kst_signal_period,
         )
         # Return the configuration encapsulated in BacktestingConfig
         return BacktestingConfig(config=config, start=self.start, end=self.end)
