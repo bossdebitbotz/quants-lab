@@ -1,0 +1,113 @@
+{
+  "models": {
+    "directional": "models/directional_tft_20250502_134913.pt",
+    "downward": "models/downward_specialist_tft_20250502_140300.pt"
+  },
+  "dataset": "data_improvements/improved_dataset_small.csv",
+  "target": "target_ma_adjusted",
+  "samples": 4543,
+  "ensemble_method": "adaptive",
+  "ensemble_threshold": 0.003,
+  "metrics": {
+    "directional": {
+      "mae": 0.0036773216441445297,
+      "rmse": 0.004424427323489644,
+      "direction_accuracy": 0.4887709581091465,
+      "positive_accuracy": 0.9090497737556561,
+      "negative_accuracy": 0.08412017167381974,
+      "zero_accuracy": 0.0,
+      "balance": 10.443324937027707,
+      "bias": 0.003423859668993605
+    },
+    "downward": {
+      "mae": 0.009979708661702499,
+      "rmse": 0.010290590808591215,
+      "direction_accuracy": 0.5128769535549197,
+      "positive_accuracy": 0.0,
+      "negative_accuracy": 1.0,
+      "zero_accuracy": 0.0,
+      "balance": 0.0,
+      "bias": -0.009957941044390066
+    },
+    "ensemble": {
+      "mae": 0.009979708661702499,
+      "rmse": 0.010290590808591215,
+      "direction_accuracy": 0.5128769535549197,
+      "positive_accuracy": 0.0,
+      "negative_accuracy": 1.0,
+      "zero_accuracy": 0.0,
+      "balance": 0.0,
+      "bias": -0.009957941044390066
+    }
+  },
+  "trading_results": {
+    "0.0001": {
+      "threshold": 0.0001,
+      "total_trades": 4543,
+      "win_rate": 2330.0,
+      "total_return": -15.408305680541861,
+      "avg_return_per_trade": -7.465680707553924e-07,
+      "sharpe_ratio": -0.12804411951038608
+    },
+    "0.0005": {
+      "threshold": 0.0005,
+      "total_trades": 4543,
+      "win_rate": 2330.0,
+      "total_return": -15.408305680541861,
+      "avg_return_per_trade": -7.465680707553924e-07,
+      "sharpe_ratio": -0.12804411951038608
+    },
+    "0.001": {
+      "threshold": 0.001,
+      "total_trades": 4543,
+      "win_rate": 2330.0,
+      "total_return": -15.408305680541861,
+      "avg_return_per_trade": -7.465680707553924e-07,
+      "sharpe_ratio": -0.12804411951038608
+    },
+    "0.003": {
+      "threshold": 0.003,
+      "total_trades": 4543,
+      "win_rate": 2330.0,
+      "total_return": -15.408305680541861,
+      "avg_return_per_trade": -7.465680707553924e-07,
+      "sharpe_ratio": -0.12804411951038608
+    },
+    "0.005": {
+      "threshold": 0.005,
+      "total_trades": 4513,
+      "win_rate": 2314.0,
+      "total_return": -15.30655591817861,
+      "avg_return_per_trade": -7.465680707553925e-07,
+      "sharpe_ratio": -0.1276206451598531
+    },
+    "0.01": {
+      "threshold": 0.01,
+      "total_trades": 2103,
+      "win_rate": 1076.0,
+      "total_return": -7.1326583416639915,
+      "avg_return_per_trade": -7.465680707553923e-07,
+      "sharpe_ratio": -0.08711799131650634
+    }
+  },
+  "best_threshold": 0,
+  "best_sharpe": 0,
+  "confusion_matrix": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      1.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "timestamp": "2025-05-02 14:21:39"
+}

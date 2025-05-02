@@ -1,177 +1,105 @@
-# QuantsLab
+# Quants-Lab: TFT Cryptocurrency Price Prediction
 
-QuantsLab is a Python project designed for quantitative research with Hummingbot. It provides functionalities for fetching historical data, calculating metrics, backtesting, and generating trading configurations.
+## Overview
 
-## Installation
+This project develops Temporal Fusion Transformer (TFT) models for high-frequency cryptocurrency price prediction. We're implementing and refining machine learning models to capture market dynamics and forecast short-term price movements.
+
+## Project Structure
+
+```
+quants-lab/
+├── .cursorrules          # Project development guidelines
+├── docs/                 # Documentation
+│   ├── changelog.md      # Version history and progress
+│   ├── features.md       # Feature definitions and engineering
+│   ├── model_architecture.md # TFT architecture details
+│   ├── evaluation_metrics.md # Evaluation methodology
+│   └── training_protocol.md  # Standard training procedures
+├── models/               # Saved model files
+│   └── tft_10sec_bias_corrected_20250501_230054.pt # Latest model
+├── experiments/          # Experiment tracking
+│   └── tft_10sec_v0.1/   # Current experiment
+│       ├── config.json   # Configuration parameters
+│       ├── summary.md    # Experiment results
+│       └── images/       # Visualizations and plots
+└── evaluate_tft_10sec_model.ipynb # Evaluation notebook
+```
+
+## Current Status
+
+We're currently at version 0.1.0 of our TFT model for 10-second bar data. Key characteristics:
+
+- 21 time-varying features (price, volume, order book metrics)
+- 128-dimensional hidden layers with 4 attention heads
+- Context window of 30 time steps (5 minutes of market data)
+- Bias correction to address systematic prediction errors
+
+See `docs/changelog.md` for detailed version history and progress.
+
+## Getting Started
 
 ### Prerequisites
-- Anaconda (or Miniconda) must be installed on your system. You can download it from [https://www.anaconda.com/products/distribution](https://www.anaconda.com/products/distribution)
 
-### Steps
-1. Clone the repository:
-   ```
-   git clone https://github.com/hummingbot/quants-lab.git
-   cd quants-lab
-   ```
+- Python 3.8+
+- PyTorch 1.10+
+- PostgreSQL database with market data
+- Required packages: numpy, pandas, matplotlib, seaborn, psycopg2
 
-2. Create and activate the Conda environment:
-   ```
-   make install
-   ```
-   This command will create a new Conda environment and install all the necessary dependencies.
+### Setup
 
-3. Activate the environment:
-   ```
-   conda activate quants-lab
-   ```
+1. Clone the repository
+2. Install required packages: `pip install -r requirements.txt`
+3. Configure database connection in evaluation notebook
+4. Run evaluation notebook to test models
 
-You're now ready to use QuantsLab!
+### Database Configuration
 
-## Usage
-### 1. Research Notebooks
-   - Under the research notebooks folder you will find a folder for each strategy. The idea is that you can use them as an inspiration to do research on your own strategies.
-   - The main steps are:
-       - Exploratory Data Analysis
-       - Design the controller
-       - Backtest a simple controller
-       - Optimize and find the best parameters
+The project uses a PostgreSQL database with the following configuration:
 
-        
----     
+```python
+DB_CONFIG = {
+    'host': 'localhost',
+    'port': 5438,
+    'user': 'backtest_user',
+    'password': 'backtest_password',
+    'database': 'backtest_db'
+}
+```
 
-### 2. Task Orchestration
+## Model Architecture
 
-#### **Prerequisites**
-1. Ensure Docker and Docker Compose are installed. If not, you can install them with the following commands:
-    ```bash
-    curl -fsSL https://get.docker.com -o get-docker.sh
-    sh get-docker.sh
-    ```
+We're implementing a modified version of the Temporal Fusion Transformer as described in the paper by Lim et al. (2019). See `docs/model_architecture.md` for details on our implementation.
 
-2. Verify the Docker installation by running:
-    ```bash
-    docker --version
-    docker compose version
-    ```
+## Development Workflow
 
----
+1. Follow the `docs/training_protocol.md` for training new models
+2. Document experiments in the `experiments/` directory
+3. Evaluate models using standard metrics in `docs/evaluation_metrics.md`
+4. Update changelog with progress and version history
 
-#### **Configuration**
+## Future Development
 
-1. **Modify Task Settings**:
-   - Navigate to the `config` folder and locate the `tasks.yml` file.
-   - Update the file to include the specific tasks you want to execute. By default, it is configured to run the pool-fetching task.
+Key areas for improvement:
 
-2. **Customize Database Credentials** *(Optional)*:
-   - The default credentials for MongoDB and PostgreSQL are specified in the `docker-compose-db.yml` file.
-   - Update these credentials if necessary, especially for production environments.
+1. Enhanced feature engineering (market regimes, advanced order book features)
+2. Full TFT architecture implementation with variable selection networks
+3. Robust trading simulation and strategy development
+4. Cross-validation across different market conditions
 
----
+See the [Current Experiment Summary](experiments/tft_10sec_v0.1/summary.md) for specific next steps.
 
-#### **Steps to Run Tasks**
+## Contributing
 
-1. **Build the Docker Image**:
-   Build the local Quants-Lab Docker image by running:
-   ```bash
-   make build
-   ```
+1. Follow the guidelines in `.cursorrules`
+2. Document all changes and experiments thoroughly
+3. Maintain model reproducibility at all times
+4. Ensure all code has appropriate tests
 
-2. **Start Databases**:
-   Start the necessary databases (MongoDB and PostgreSQL) using:
-   ```bash
-   make run-db
-   ```
+## License
 
-3. **Run the Task Runner**:
-   Execute tasks specified in `tasks.yml` with the following command:
-   ```bash
-   make run-task config=tasks.yml
-   ```
+This project is proprietary and confidential.
 
-4. **Monitor Database Activity**:
-   Use Mongo Compass UI to inspect the database data:
-   - Open your web browser and visit:
-     ```
-     http://localhost:28081/
-     ```
-   - Default credentials:
-     - **Username**: `admin`
-     - **Password**: `changeme`
-   - Update these credentials in `docker-compose-db.yml` if needed.
+## Acknowledgments
 
-   Replace `localhost` with your machine's IP address if accessing remotely.
-
----
-
-#### **Stopping Services**
-
-1. **Stop the Task Runner**:
-   ```bash
-   make stop-task
-   ```
-
-2. **Stop the Databases**:
-   ```bash
-   make stop-db
-   ```
-
----
-
-### Notes:
-- Ensure all required ports are open and accessible.
-- Regularly check the logs for errors using `docker logs <container_name>`.
-- Make sure to re-build the local Docker image using `make build` after any changes are made to `tasks.yml`.
-
---- 
-
-## Data Source
-- **CLOB (Central Limit Order Book)**
-  - Last Traded Price
-  - Current Order Book
-  - Historical Candles
-  - Historical Trades
-  - Trading Rules
-  - Funding Info
-
-- **AMM (Automated Market Maker)**
-  - Last Traded Price
-  - Current Liquidity
-  - Pool Stats
-    - Fees Collected
-    - Volume (24h)
-  - Historical Trades
-
-- **GeckoTerminal**
-  - Networks
-  - Dexes by Network
-  - Top Pools by Network
-  - Top Pools by Network Dex
-  - Top Pools by Network Token
-  - New Pools by Network
-  - New Pools (All Networks)
-  - OHLCV
-
-- **CoinGecko**
-  - Top Tokens Stats
-  - Top Exchange Stats
-  - Market Stats by Token
-  - Market Stats by Exchange
-
-- **Spice (DuneAnalytics)**
-  - Queries
-
-### Modules
-- **Labeling**
-  - Triple Barrier Method
-
-- **Backtesting**
-
-- **Optimization**
-
-- **Visualization**
-  - OHLC
-  - Order Book
-  - Backtesting Report
-
-- **Features**
-  - Signals
+- Based on the paper ["Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting"](https://arxiv.org/abs/1912.09363) by Bryan Lim et al.
+- Inspired by PyTorch Forecasting and GluonTS implementations of TFT

@@ -1,0 +1,88 @@
+{
+    "model_name": "tft_10sec_v0.1",
+    "description": "Initial 10-second TFT model with bias correction",
+    "created_at": "2025-05-01",
+    
+    "architecture": {
+        "model_type": "TemporalFusionTransformer",
+        "time_varying_features": 21,
+        "hidden_size": 128,
+        "num_heads": 4,
+        "dropout": 0.2,
+        "num_lstm_layers": 2,
+        "context_length": 30,
+        "prediction_length": 1
+    },
+    
+    "training": {
+        "learning_rate": 1e-4,
+        "batch_size": 64,
+        "max_epochs": 100,
+        "early_stopping_patience": 10,
+        "loss_function": "MSE",
+        "optimizer": "Adam",
+        "weight_decay": 1e-6,
+        "random_seed": 42
+    },
+    
+    "data": {
+        "frequency": "10sec",
+        "database": "backtest_db",
+        "table": "tft_features_10sec",
+        "train_period": {
+            "start": "2025-03-01 00:00:00",
+            "end": "2025-04-15 00:00:00"
+        },
+        "validation_period": {
+            "start": "2025-04-15 00:00:00",
+            "end": "2025-04-22 00:00:00"
+        },
+        "test_period": {
+            "start": "2025-04-22 00:00:00",
+            "end": "2025-04-30 00:00:00"
+        },
+        "features": [
+            "open", "high", "low", "close",
+            "volume", "bid_vol", "ask_vol", 
+            "imbalance", "spread_mean", "spread_pct_mean",
+            "new_bid_orders", "new_ask_orders",
+            "canceled_bid_orders", "canceled_ask_orders",
+            "executed_bid_orders", "executed_ask_orders",
+            "buy_sell_imbalance",
+            "returns_10sec", "returns_30sec", "returns_1min",
+            "volatility_1min"
+        ],
+        "target": "next_return"
+    },
+    
+    "bias_correction": {
+        "applied": true,
+        "value": 0.0002,
+        "method": "constant_subtraction"
+    },
+    
+    "performance": {
+        "train_loss": 0.0124,
+        "validation_loss": 0.0135,
+        "test_metrics": {
+            "mae": 0.3098,
+            "rmse": 0.3237,
+            "correlation": null,
+            "bias": -0.3097
+        },
+        "trading_simulation": {
+            "threshold": 0.0001,
+            "fee": 0.001,
+            "win_rate": null,
+            "profit_factor": null,
+            "total_trades": null
+        }
+    },
+    
+    "notes": [
+        "Initial model shows persistent negative bias that requires correction",
+        "Several features (returns_*, volatility_*) show zero standard deviation in test data",
+        "Need to investigate data quality issues and improve feature engineering",
+        "Trading simulation to be implemented and optimized in next version"
+    ]
+} 

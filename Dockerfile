@@ -1,33 +1,40 @@
-# Start from a base image with Miniconda installed
-FROM continuumio/miniconda3
+FROM python:3.9-slim
 
-# Install system dependencies
-RUN apt-get update && \
-    apt-get install -y sudo libusb-1.0 python3-dev gcc g++ make && \
-    rm -rf /var/lib/apt/lists/*
+# Set working directory
+WORKDIR /app
 
-# Set the working directory in the container
-WORKDIR /quants-lab
+# Copy requirements file
+COPY requirements.txt .
 
-# Copy the current directory contents and the Conda environment file into the container
-COPY core/ core/
-COPY environment.yml .
-COPY research_notebooks/ research_notebooks/
-COPY controllers/ controllers/
-COPY tasks/ tasks/
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Create the environment from the environment.yml file
-# If cchardet fails, we'll install it separately
-RUN conda env create -f environment.yml
+# Install additional dependencies for the model server
+RUN pip install --no-cache-dir flask gunicorn
 
-# Activate the environment and install cchardet separately if it failed
-# RUN conda run -n quants_lab pip install cchardet || echo "cchardet installation failed, continuing anyway"
+# Copy codebase
+COPY models/ ./models/
+COPY train_improved_tft.py .
+COPY evaluate_improved_tft.py .
+COPY serve_tft_model.py .
 
-# Make RUN commands use the new environment
-SHELL ["conda", "run", "-n", "quants-lab", "/bin/bash", "-c"]
+# Create directories for model storage and logs
+RUN mkdir -p models/saved_models logs
 
-# Copy task configurations
-COPY config/tasks.yml /quants-lab/config/tasks.yml
+# By default, expose port 5000 for the Flask API
+EXPOSE 5000
 
-# Default command now uses the task runner
-CMD ["conda", "run", "--no-capture-output", "-n", "quants-lab", "python3", "run_tasks.py"]
+# Create a non-root user to run the app
+RUN useradd -m tftuser
+RUN chown -R tftuser:tftuser /app
+USER tftuser
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV TZ=UTC
+
+# Run the server using gunicorn for production
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "2", "--timeout", "120", "serve_tft_model:init_app()"]
+
+# Command for development (uncomment for local testing)
+# CMD ["python", "serve_tft_model.py", "--host", "0.0.0.0", "--port", "5000"]

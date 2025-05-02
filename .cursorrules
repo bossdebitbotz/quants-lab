@@ -1,0 +1,223 @@
+# Quants-Lab TFT Model Development Rules
+
+## 📜 Core Philosophy
+
+1. **Reproducibility:** All model training, hyperparameter tuning, and evaluation processes must be fully reproducible through rigorous version control of code, data, parameters, and environments.
+2. **Documentation:** Document all key decisions, experiments, methodology changes, and results to maintain knowledge continuity.
+3. **Model Versioning:** Maintain clear versioning of models with descriptive naming conventions that include training data timeframes and distinguishing features.
+4. **Progressive Improvement:** Build on previous work systematically. New models should demonstrate measurable improvements over baseline methods.
+5. **Verification:** All model changes must include verification through backtesting and out-of-sample validation.
+6. **LLM Continuity:** Provide clear version history and context for LLMs to maintain continuity across development sessions.
+
+## 📚 Project Structure & Documentation
+
+1. **Model Registry:**
+   * Store all trained models in `models/` with consistent naming: `{model_type}_{data_frequency}_{variant}_{date}_{time}.pt`
+   * Example: `tft_10sec_bias_corrected_20250501_230054.pt`
+   * Include optional descriptive tags for special variants (e.g., `bias_corrected`, `expanded_features`)
+
+2. **Experiment Tracking:**
+   * Maintain an `experiments/` directory with subdirectories for each experiment run
+   * Each experiment should include:
+     * Configuration file documenting hyperparameters and data settings
+     * Training logs (loss curves, validation metrics)
+     * Final evaluation metrics
+     * Summary report of findings
+
+3. **Documentation Files:**
+   * `docs/model_architecture.md`: Details of the TFT architecture, modifications, and design decisions
+   * `docs/features.md`: Documentation of all features used, their definitions, and engineering process
+   * `docs/training_protocol.md`: Standard procedures for model training
+   * `docs/evaluation_metrics.md`: Definitions of evaluation metrics and success criteria
+   * `docs/changelog.md`: Running log of significant model updates and improvements
+
+4. **Notebook Documentation:**
+   * All notebooks must include clear section headers, explanatory markdown cells
+   * Document purpose, data sources, key parameters, and expected outputs
+   * Include performance metrics and visualizations to illustrate model behavior
+   * End with conclusion section summarizing findings and next steps
+
+## ⚙️ Model Development Workflow
+
+1. **Feature Engineering:**
+   * Document all feature creation, transformations, and normalization procedures
+   * Include statistical properties of features (mean, std, min/max, distribution)
+   * Test for stationarity, autocorrelation, and feature importance
+   * Justify the inclusion of each feature with respect to theoretical relevance to price prediction
+
+2. **Model Configuration:**
+   * Document all hyperparameters including:
+     * Network architecture (hidden layers, dimensions, attention heads)
+     * Learning rates and optimization settings
+     * Sequence lengths (context window, prediction horizon)
+     * Regularization parameters
+     * Batch sizes and training epochs
+   * Maintain version-controlled configuration files for reproducibility
+
+3. **Training Protocol:**
+   * Document data splitting methodology (train/validation/test)
+   * Record random seeds for reproducibility
+   * Log all training metrics (loss curves, validation performance)
+   * Document early stopping criteria and checkpoint saving strategy
+   * Track computational resources used and training duration
+
+4. **Evaluation Procedure:**
+   * Define standard evaluation metrics for all models:
+     * RMSE, MAE for regression performance
+     * Correlation/R² for predictive power
+     * Direction accuracy for signal quality
+     * Trading simulation metrics (PnL, Sharpe, win rate)
+   * Compare against baseline models and previous versions
+   * Test for robustness across different market conditions
+   * Evaluate for bias and calibration (systematic errors)
+
+## 🔢 Data Management
+
+1. **Data Versioning:**
+   * Document data source, timeframe, and frequency
+   * Record any preprocessing, cleaning, or filtering applied
+   * Track data statistics and distribution shifts over time
+   * Maintain consistent train/validation/test splits across experiments
+
+2. **Feature Pipeline:**
+   * Document feature extraction, normalization, and transformation steps
+   * Handle missing values consistently with documented strategies
+   * Ensure no data leakage across time boundaries
+   * Verify temporal alignment of features and targets
+
+3. **Database Integration:**
+   * Document database schema and connection parameters
+   * Include sample queries for data retrieval
+   * Track any changes to database structure or data storage methods
+   * Document data refresh procedures and frequency
+
+## 📈 Model Training Specifics for TFT
+
+1. **Architecture Decisions:**
+   * Document TFT-specific architectural choices:
+     * Variable selection network configuration
+     * Temporal processing layers (LSTM/GRU parameters)
+     * Attention mechanism details (multi-head configuration)
+     * Static vs. time-varying feature handling
+   * Justify architectural modifications from standard implementations
+
+2. **Training Optimizations:**
+   * Document learning rate schedules
+   * Gradient clipping parameters
+   * Batch normalization settings
+   * Dropout rates for regularization
+   * GPU utilization and memory requirements
+
+3. **Model Enhancements:**
+   * Document any custom loss functions
+   * Bias correction methodology and measurement
+   * Ensemble techniques if applicable
+   * Calibration procedures
+   * Quantile prediction settings if using probabilistic outputs
+
+## ⚡ Performance Optimization
+
+1. **Computational Efficiency:**
+   * Document inference speed requirements for production deployment
+   * Profile model execution times
+   * Track memory utilization
+   * Implement and document any performance optimizations
+   * Consider model compression or quantization techniques for deployment
+
+2. **Prediction Quality:**
+   * Document threshold optimization for signal generation
+   * Analyze prediction error patterns
+   * Track bias and variance of model predictions
+   * Conduct sensitivity analysis to hyperparameters
+
+## 🛡️ Risk Management
+
+1. **Model Risk:**
+   * Document limitations and failure modes
+   * Track performance degradation patterns over time
+   * Define monitoring metrics for production deployment
+   * Establish retraining criteria and schedule
+
+2. **Trading Risk:**
+   * Document position sizing methodology based on prediction confidence
+   * Define risk limits and drawdown thresholds
+   * Implement kill switches for abnormal model behavior
+   * Test robustness to market regime changes
+
+## ✅ Version Control for TFT Development
+
+1. **GitHub Integration:**
+   * Commit all code, configuration, and documentation changes
+   * Use descriptive commit messages linking to experiment results
+   * Create tags for significant model versions
+   * Maintain clean branches for feature development
+
+2. **Model Checkpointing:**
+   * Save model checkpoints at regular intervals during training
+   * Maintain best models based on different evaluation metrics
+   * Document the location and naming convention of model checkpoints
+   * Include metadata with checkpoint files (training config, performance metrics)
+
+## 🐛 Debugging & Troubleshooting
+
+1. **Common Issues:**
+   * Document known numerical instability patterns
+   * Track gradient explosion/vanishing issues
+   * Record solutions to common training problems
+   * Maintain troubleshooting guides for reproducibility issues
+
+2. **Performance Diagnosis:**
+   * Document procedures for identifying underfitting vs. overfitting
+   * Track feature importance analysis
+   * Analyze prediction error patterns by market regime
+   * Implement attention visualization for model interpretability
+
+## 📊 Reporting & Visualization
+
+1. **Standard Visualizations:**
+   * Loss curves during training
+   * Actual vs. predicted scatter plots
+   * Time series plots of predictions
+   * Feature importance/attention weights
+   * Trading performance metrics (equity curves, drawdowns)
+
+2. **Regular Reports:**
+   * Weekly progress summaries
+   * Model performance comparisons
+   * Feature engineering insights
+   * Trading strategy developments
+   * Research directions and priorities
+
+## 🔄 Continuous Improvement
+
+1. **Research Integration:**
+   * Document relevant academic papers and implementations
+   * Track experiments inspired by research findings
+   * Maintain bibliography of influential works
+   * Compare results with published benchmarks
+
+2. **Ablation Studies:**
+   * Document incremental testing of features and components
+   * Measure contribution of individual architectural elements
+   * Quantify the impact of different data sources
+   * Record findings from hyperparameter sensitivity analysis
+
+## 🤖 LLM Interaction Guidelines
+
+1. **Context Preservation:**
+   * Begin new sessions with summary of current model state and recent progress
+   * Reference specific experiment IDs and model versions
+   * Link to relevant documentation and code files
+   * Provide performance metrics of current best model
+
+2. **Task Specification:**
+   * Clearly define the purpose of each LLM interaction
+   * Provide sufficient context for the specific problem
+   * Reference previous related interactions
+   * Specify expected outcomes and deliverables
+
+3. **Progress Tracking:**
+   * Update experiment logs after each significant LLM contribution
+   * Document code changes and their impact
+   * Record insights generated through LLM analysis
+   * Maintain continuity across multiple sessions 

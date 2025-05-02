@@ -3,6 +3,7 @@ import logging
 import os.path
 import subprocess
 import traceback
+import time
 from abc import ABC, abstractmethod
 from typing import List, Optional, Type, Dict
 
@@ -282,7 +283,14 @@ class StrategyOptimizer:
                 start = bt_config.start
                 end = bt_config.end
 
-                trial.set_user_attr("config", bt_config.config.json())
+                # Store only essential configuration data
+                essential_config = {
+                    "connector_name": connector_name,
+                    "trading_pair": trading_pair,
+                    "strategy_name": bt_config.config.strategy_name,
+                    "parameters": bt_config.config.parameters
+                }
+                trial.set_user_attr("config", essential_config)
                 trial.set_user_attr("start_bt", start)
                 trial.set_user_attr("end_bt", end)
                 candles = await self._db_client.get_candles(connector_name,
@@ -346,17 +354,39 @@ class StrategyOptimizer:
             )
             strategy_analysis = backtesting_result.results
 
+            # Store numeric results directly
             for key, value in strategy_analysis.items():
-                trial.set_user_attr(key, value)
-            trial.set_user_attr("config", backtesting_result.controller_config.json())
+                if isinstance(value, (int, float)):
+                    trial.set_user_attr(key, value)
+
+            # Store configuration as chunks if it's large
+            config_json = backtesting_result.controller_config.json()
+            if len(config_json) > 2000:  # If config is large, chunk it
+                chunks = [config_json[i:i+2000] for i in range(0, len(config_json), 2000)]
+                for i, chunk in enumerate(chunks):
+                    trial.set_user_attr(f"config_chunk_{i}", chunk)
+                trial.set_user_attr("config_chunks", len(chunks))
+            else:
+                trial.set_user_attr("config", config_json)
+
+            # Process executors data
             executors_df = backtesting_result.executors_df.copy()
             executors_df["close_type"] = executors_df["close_type"].apply(lambda x: x.name)
             executors_df["status"] = executors_df["status"].apply(lambda x: x.name)
             executors_df.drop(columns=["config"], inplace=True)
-            trial.set_user_attr("executors", executors_df.to_json())
+
+            # Store executors data in chunks
+            executors_json = executors_df.to_json()
+            if len(executors_json) > 2000:  # If executors data is large, chunk it
+                chunks = [executors_json[i:i+2000] for i in range(0, len(executors_json), 2000)]
+                for i, chunk in enumerate(chunks):
+                    trial.set_user_attr(f"executors_chunk_{i}", chunk)
+                trial.set_user_attr("executors_chunks", len(chunks))
+            else:
+                trial.set_user_attr("executors", executors_json)
 
             # Return the value you want to optimize
-            return strategy_analysis["sharpe_ratio"]
+            return strategy_analysis["net_pnl"]
         except Exception as e:
             print(f"An error occurred during optimization: {str(e)}")
             traceback.print_exc()
@@ -366,15 +396,51 @@ class StrategyOptimizer:
         """
         Launch the Optuna dashboard for visualization.
         """
-        self.dashboard_process = subprocess.Popen(["optuna-dashboard", self._storage_name])
+        try:
+            # Kill any existing dashboard process
+            self.kill_optuna_dashboard()
+            
+            # Launch the dashboard with proper environment variables
+            env = os.environ.copy()
+            env['PYTHONUNBUFFERED'] = '1'
+            env['GRPC_PYTHON_LOG_LEVEL'] = 'error'  # Suppress gRPC warnings
+            
+            self.dashboard_process = subprocess.Popen(
+                ["optuna-dashboard", self._storage_name],
+                env=env,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                universal_newlines=True
+            )
+            
+            # Wait a moment to check if the process started successfully
+            time.sleep(1)
+            if self.dashboard_process.poll() is not None:
+                # Process terminated immediately
+                stdout, stderr = self.dashboard_process.communicate()
+                raise RuntimeError(f"Dashboard failed to start. Error: {stderr}")
+                
+            print("Optuna dashboard launched successfully. Access it at http://localhost:8080")
+            
+        except Exception as e:
+            print(f"Error launching Optuna dashboard: {str(e)}")
+            self.kill_optuna_dashboard()
+            raise
 
     def kill_optuna_dashboard(self):
+        """Kill the Optuna dashboard process if it's running."""
+        if self.dashboard_process:
+            self.dashboard_process.terminate()
+            self.dashboard_process = None
+
+    async def cleanup(self):
         """
-        Kill the Optuna dashboard process.
+        Clean up database connections and resources.
         """
-        if self.dashboard_process and self.dashboard_process.poll() is None:
-            self.dashboard_process.terminate()  # Graceful termination
-            self.dashboard_process.wait()  # Wait for process to terminate
-            self.dashboard_process = None  # Reset process handle
-        else:
-            print("Dashboard is not running or already terminated.")
+        try:
+            if self._db_client:
+                await self._db_client.close()
+            self.kill_optuna_dashboard()
+        except Exception as e:
+            logger.error(f"Error during cleanup: {str(e)}")
+            raise

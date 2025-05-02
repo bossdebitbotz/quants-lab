@@ -1,0 +1,52 @@
+{
+  "timestamp": "20250502_125059",
+  "model_type": "improved_tft",
+  "hyperparameters": {
+    "context_length": 10,
+    "prediction_length": 1,
+    "hidden_size": 64,
+    "num_attention_heads": 2,
+    "dropout": 0.2,
+    "learning_rate": 0.0005,
+    "batch_size": 32,
+    "max_epochs": 50
+  },
+  "feature_definitions": {
+    "static_categorical_cols": [],
+    "static_real_cols": [],
+    "temporal_categorical_cols": [],
+    "temporal_real_cols": [
+      "returns_1min",
+      "spread_z_score",
+      "high_volatility",
+      "sign_consistency",
+      "trend_indicator",
+      "sma_fast",
+      "volatility_1min",
+      "rsi_14",
+      "sma_slow",
+      "spread_pct_mean",
+      "aligned_flow_cumul",
+      "cum_imbalance_1min",
+      "low",
+      "close",
+      "cum_imbalance_3min",
+      "vol_imbalance_interaction",
+      "inv_liquidity",
+      "log_order_ratio",
+      "high",
+      "open"
+    ],
+    "target_col": "target"
+  },
+  "time_varying_embedding_sizes": [],
+  "best_val_loss": 5.076851716800945e-10,
+  "best_epoch": "09",
+  "test_results": {
+    "test_mae": 4.7549587179673836e-05,
+    "test_rmse": 4.756433190777898e-05,
+    "test_bias": -4.7549587179673836e-05,
+    "test_direction_accuracy": 0.0,
+    "test_loss": 2.263245146849613e-09
+  }
+}

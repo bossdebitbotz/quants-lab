@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  jupyter-vpn:
+    build:
+      context: ../..  # Root of the project
+      dockerfile: research_notebooks/super_micro_deloy/Dockerfile
+    container_name: jupyter-vpn-asia
+    volumes:
+      # Mount the research notebooks directory for persistent storage
+      - ../../research_notebooks:/quants-lab/research_notebooks
+      # Mount for Mullvad data for persistent login
+      - mullvad_data:/var/cache/mullvad-vpn
+    ports:
+      - "8888:8888"  # Jupyter port
+    environment:
+      # Required: Mullvad account number
+      - MULLVAD_ACCOUNT=${MULLVAD_ACCOUNT}
+      # Optional: VPN location (sg=Singapore, jp=Japan, etc.)
+      - MULLVAD_LOCATION=${MULLVAD_LOCATION:-sg}
+      # Optional: Jupyter password (if not set, token authentication will be used)
+      - JUPYTER_PASSWORD=${JUPYTER_PASSWORD:-}
+    cap_add:
+      - NET_ADMIN  # Required for VPN tunneling
+    restart: unless-stopped
+    # Command is not needed as we use ENTRYPOINT in Dockerfile
+
+volumes:
+  mullvad_data:  # Persistent storage for Mullvad VPN 

@@ -1,0 +1,386 @@
+{
+  "open": {
+    "mutual_info": 0.7171100389101039,
+    "f_regression": 0.14089648636924976,
+    "correlation": 0.010414445522705993,
+    "mutual_info_rank": 16,
+    "f_regression_rank": 9,
+    "correlation_rank": 27
+  },
+  "high": {
+    "mutual_info": 0.8002228224874994,
+    "f_regression": 0.14089648636924976,
+    "correlation": 0.010414445522705993,
+    "mutual_info_rank": 14,
+    "f_regression_rank": 10,
+    "correlation_rank": 28
+  },
+  "low": {
+    "mutual_info": 0.9108349803797525,
+    "f_regression": 0.14089648636924976,
+    "correlation": 0.010414445522705993,
+    "mutual_info_rank": 6,
+    "f_regression_rank": 11,
+    "correlation_rank": 29
+  },
+  "close": {
+    "mutual_info": 0.9108214867159992,
+    "f_regression": 0.14089648636924976,
+    "correlation": 0.010414445522705993,
+    "mutual_info_rank": 7,
+    "f_regression_rank": 12,
+    "correlation_rank": 30
+  },
+  "volume": {
+    "mutual_info": 0.12439957372031493,
+    "f_regression": 0.0,
+    "correlation": 0.0,
+    "mutual_info_rank": 28,
+    "f_regression_rank": 38,
+    "correlation_rank": 38
+  },
+  "bid_vol": {
+    "mutual_info": 0.11942383084349881,
+    "f_regression": 0.0,
+    "correlation": 0.0,
+    "mutual_info_rank": 29,
+    "f_regression_rank": 39,
+    "correlation_rank": 39
+  },
+  "ask_vol": {
+    "mutual_info": 0.04878412511317824,
+    "f_regression": 0.0,
+    "correlation": 0.0,
+    "mutual_info_rank": 34,
+    "f_regression_rank": 40,
+    "correlation_rank": 40
+  },
+  "imbalance": {
+    "mutual_info": 0.6020600644873021,
+    "f_regression": 0.012866512053221046,
+    "correlation": 0.11003353607146966,
+    "mutual_info_rank": 20,
+    "f_regression_rank": 22,
+    "correlation_rank": 12
+  },
+  "spread_mean": {
+    "mutual_info": 0.0,
+    "f_regression": 0.0,
+    "correlation": 0.0,
+    "mutual_info_rank": 37,
+    "f_regression_rank": 41,
+    "correlation_rank": 41
+  },
+  "spread_pct_mean": {
+    "mutual_info": 0.9853867777653317,
+    "f_regression": 0.0053232175038044754,
+    "correlation": 0.10772528758067101,
+    "mutual_info_rank": 2,
+    "f_regression_rank": 24,
+    "correlation_rank": 13
+  },
+  "new_bid_orders": {
+    "mutual_info": 0.5735155051285964,
+    "f_regression": 0.08229012792106859,
+    "correlation": 0.08166193369501593,
+    "mutual_info_rank": 21,
+    "f_regression_rank": 15,
+    "correlation_rank": 20
+  },
+  "new_ask_orders": {
+    "mutual_info": 0.6841507297898879,
+    "f_regression": 0.061195786864200186,
+    "correlation": 0.08092956904893414,
+    "mutual_info_rank": 18,
+    "f_regression_rank": 17,
+    "correlation_rank": 21
+  },
+  "canceled_bid_orders": {
+    "mutual_info": 0.5426771380632734,
+    "f_regression": 0.08216046084912089,
+    "correlation": 0.08174356923852578,
+    "mutual_info_rank": 23,
+    "f_regression_rank": 16,
+    "correlation_rank": 19
+  },
+  "canceled_ask_orders": {
+    "mutual_info": 0.5481633482099277,
+    "f_regression": 0.05884267433224404,
+    "correlation": 0.08016728949437336,
+    "mutual_info_rank": 22,
+    "f_regression_rank": 18,
+    "correlation_rank": 24
+  },
+  "executed_bid_orders": {
+    "mutual_info": 0.0,
+    "f_regression": 0.0,
+    "correlation": 0.0,
+    "mutual_info_rank": 38,
+    "f_regression_rank": 42,
+    "correlation_rank": 42
+  },
+  "executed_ask_orders": {
+    "mutual_info": 0.07046116688377524,
+    "f_regression": 0.0,
+    "correlation": 0.0,
+    "mutual_info_rank": 32,
+    "f_regression_rank": 43,
+    "correlation_rank": 43
+  },
+  "buy_sell_imbalance": {
+    "mutual_info": 0.0,
+    "f_regression": 0.0,
+    "correlation": 0.0,
+    "mutual_info_rank": 39,
+    "f_regression_rank": 44,
+    "correlation_rank": 44
+  },
+  "returns_10sec": {
+    "mutual_info": 0.13595167708264608,
+    "f_regression": 4.1330303964662116e-10,
+    "correlation": 3.6279298622169963e-05,
+    "mutual_info_rank": 27,
+    "f_regression_rank": 35,
+    "correlation_rank": 35
+  },
+  "returns_30sec": {
+    "mutual_info": 0.09143007236030903,
+    "f_regression": 1.2399102474686679e-09,
+    "correlation": 6.360813073727844e-05,
+    "mutual_info_rank": 31,
+    "f_regression_rank": 34,
+    "correlation_rank": 34
+  },
+  "returns_1min": {
+    "mutual_info": 0.8338975247800366,
+    "f_regression": 1.0,
+    "correlation": 0.6011413414294671,
+    "mutual_info_rank": 12,
+    "f_regression_rank": 1,
+    "correlation_rank": 3
+  },
+  "volatility_1min": {
+    "mutual_info": 0.8361408489711759,
+    "f_regression": 0.1940450303261182,
+    "correlation": 0.25980087711820266,
+    "mutual_info_rank": 10,
+    "f_regression_rank": 8,
+    "correlation_rank": 9
+  },
+  "sma_fast": {
+    "mutual_info": 1.0,
+    "f_regression": 0.2710978342295242,
+    "correlation": 0.034728258886713444,
+    "mutual_info_rank": 1,
+    "f_regression_rank": 6,
+    "correlation_rank": 26
+  },
+  "sma_slow": {
+    "mutual_info": 0.8566192212051904,
+    "f_regression": 0.22924792946850114,
+    "correlation": 0.039561409394406485,
+    "mutual_info_rank": 9,
+    "f_regression_rank": 7,
+    "correlation_rank": 25
+  },
+  "trend_indicator": {
+    "mutual_info": 0.360050604448691,
+    "f_regression": 0.3083953113946653,
+    "correlation": 0.686727462104222,
+    "mutual_info_rank": 26,
+    "f_regression_rank": 5,
+    "correlation_rank": 2
+  },
+  "high_volatility": {
+    "mutual_info": 0.9397089456538487,
+    "f_regression": 0.3412758114536525,
+    "correlation": 0.2536125609601151,
+    "mutual_info_rank": 4,
+    "f_regression_rank": 4,
+    "correlation_rank": 10
+  },
+  "rsi_14": {
+    "mutual_info": 0.4815929193743752,
+    "f_regression": 0.44449210136498596,
+    "correlation": 0.2990086161207954,
+    "mutual_info_rank": 25,
+    "f_regression_rank": 2,
+    "correlation_rank": 5
+  },
+  "norm_imbalance": {
+    "mutual_info": 0.0,
+    "f_regression": 0.0,
+    "correlation": 0.0,
+    "mutual_info_rank": 40,
+    "f_regression_rank": 45,
+    "correlation_rank": 45
+  },
+  "imbalance_change": {
+    "mutual_info": 0.0,
+    "f_regression": 3.373594285968626e-10,
+    "correlation": 8.648654339279877e-05,
+    "mutual_info_rank": 41,
+    "f_regression_rank": 37,
+    "correlation_rank": 33
+  },
+  "imbalance_acceleration": {
+    "mutual_info": 0.0,
+    "f_regression": 0.0,
+    "correlation": 0.0,
+    "mutual_info_rank": 42,
+    "f_regression_rank": 46,
+    "correlation_rank": 46
+  },
+  "cum_imbalance_1min": {
+    "mutual_info": 0.940903877131393,
+    "f_regression": 0.013086413145754297,
+    "correlation": 0.11027923963509613,
+    "mutual_info_rank": 3,
+    "f_regression_rank": 21,
+    "correlation_rank": 11
+  },
+  "cum_imbalance_3min": {
+    "mutual_info": 0.9257742628386086,
+    "f_regression": 0.00017748795854743068,
+    "correlation": 0.0926602855737416,
+    "mutual_info_rank": 5,
+    "f_regression_rank": 26,
+    "correlation_rank": 14
+  },
+  "new_orders_ratio": {
+    "mutual_info": 0.09986740908820357,
+    "f_regression": 1.1937077485584978e-07,
+    "correlation": 0.08046190194260457,
+    "mutual_info_rank": 30,
+    "f_regression_rank": 30,
+    "correlation_rank": 22
+  },
+  "log_order_ratio": {
+    "mutual_info": 0.8076494224540769,
+    "f_regression": 0.09814232290946943,
+    "correlation": 0.08046190194260457,
+    "mutual_info_rank": 13,
+    "f_regression_rank": 13,
+    "correlation_rank": 23
+  },
+  "bid_cancel_ratio": {
+    "mutual_info": 0.0,
+    "f_regression": 1.3255755361082326e-07,
+    "correlation": 0.08615586560504755,
+    "mutual_info_rank": 43,
+    "f_regression_rank": 29,
+    "correlation_rank": 18
+  },
+  "ask_cancel_ratio": {
+    "mutual_info": 0.0,
+    "f_regression": 9.013188929338926e-08,
+    "correlation": 0.08656530851438761,
+    "mutual_info_rank": 44,
+    "f_regression_rank": 32,
+    "correlation_rank": 17
+  },
+  "relative_cancel_ratio": {
+    "mutual_info": 0.01753342072434457,
+    "f_regression": 9.013541472364502e-08,
+    "correlation": 0.08681688116348728,
+    "mutual_info_rank": 36,
+    "f_regression_rank": 31,
+    "correlation_rank": 15
+  },
+  "log_cancel_ratio": {
+    "mutual_info": 0.6548384435033336,
+    "f_regression": 0.09189201456174678,
+    "correlation": 0.08679839397575635,
+    "mutual_info_rank": 19,
+    "f_regression_rank": 14,
+    "correlation_rank": 16
+  },
+  "inv_liquidity": {
+    "mutual_info": 0.7369391237151948,
+    "f_regression": 0.0029307238033161984,
+    "correlation": 0.2620992358012384,
+    "mutual_info_rank": 15,
+    "f_regression_rank": 25,
+    "correlation_rank": 8
+  },
+  "spread_change": {
+    "mutual_info": 0.03632777435222368,
+    "f_regression": 2.4074589936745903e-08,
+    "correlation": 3.6279298622169963e-05,
+    "mutual_info_rank": 35,
+    "f_regression_rank": 33,
+    "correlation_rank": 36
+  },
+  "spread_z_score": {
+    "mutual_info": 0.900206116976527,
+    "f_regression": 0.035401762513636165,
+    "correlation": 1.0,
+    "mutual_info_rank": 8,
+    "f_regression_rank": 19,
+    "correlation_rank": 1
+  },
+  "executed_orders_imbalance": {
+    "mutual_info": 0.0,
+    "f_regression": 0.0,
+    "correlation": 0.0,
+    "mutual_info_rank": 45,
+    "f_regression_rank": 47,
+    "correlation_rank": 47
+  },
+  "normalized_exec_imbalance": {
+    "mutual_info": 0.0520822396998547,
+    "f_regression": 0.0,
+    "correlation": 0.0,
+    "mutual_info_rank": 33,
+    "f_regression_rank": 48,
+    "correlation_rank": 48
+  },
+  "returns_per_volume": {
+    "mutual_info": 0.0,
+    "f_regression": 4.1330303964662116e-10,
+    "correlation": 3.6279298622169963e-05,
+    "mutual_info_rank": 46,
+    "f_regression_rank": 36,
+    "correlation_rank": 37
+  },
+  "market_impact": {
+    "mutual_info": 0.0,
+    "f_regression": 3.0195929496458944e-06,
+    "correlation": 0.0037885953275480543,
+    "mutual_info_rank": 47,
+    "f_regression_rank": 28,
+    "correlation_rank": 31
+  },
+  "vol_imbalance_interaction": {
+    "mutual_info": 0.7065411179988875,
+    "f_regression": 0.0340967613762842,
+    "correlation": 0.2648770205776672,
+    "mutual_info_rank": 17,
+    "f_regression_rank": 20,
+    "correlation_rank": 7
+  },
+  "sign_consistency": {
+    "mutual_info": 0.8359325946718119,
+    "f_regression": 0.4022948717829285,
+    "correlation": 0.27774964311829387,
+    "mutual_info_rank": 11,
+    "f_regression_rank": 3,
+    "correlation_rank": 6
+  },
+  "aligned_flow": {
+    "mutual_info": 0.0,
+    "f_regression": 5.470382812062309e-06,
+    "correlation": 0.002657952164203846,
+    "mutual_info_rank": 48,
+    "f_regression_rank": 27,
+    "correlation_rank": 32
+  },
+  "aligned_flow_cumul": {
+    "mutual_info": 0.49602619263204745,
+    "f_regression": 0.011941556704452476,
+    "correlation": 0.5637969113483402,
+    "mutual_info_rank": 24,
+    "f_regression_rank": 23,
+    "correlation_rank": 4
+  }
+}

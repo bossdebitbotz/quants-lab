@@ -1,0 +1,19 @@
+alpha: 0.9
+bias_correction: true
+context_length: 20
+dropout: 0.2
+hidden_size: 128
+learning_rate: 0.0005
+loss_fn: directional
+lstm_layers: 2
+num_attention_heads: 4
+prediction_length: 1
+quantiles:
+- 0.1
+- 0.5
+- 0.9
+static_embedding_sizes: []
+static_variables: []
+time_varying_categorical_variables: []
+time_varying_embedding_sizes: []
+time_varying_real_variables: 64

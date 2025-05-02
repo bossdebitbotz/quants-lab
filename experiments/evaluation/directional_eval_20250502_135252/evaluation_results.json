@@ -1,0 +1,35 @@
+{
+  "model_path": "models/directional_tft_20250502_134913.pt",
+  "dataset_path": "data_improvements/improved_dataset_small.csv",
+  "target_column": "target_ma_adjusted",
+  "num_samples": 4553,
+  "metrics": {
+    "mae": 0.0031914985738694668,
+    "rmse": 0.004020220600068569,
+    "direction_accuracy": 0.4827586206896552,
+    "pos_accuracy": 0.6890794223826715,
+    "neg_accuracy": 0.2874892887746358,
+    "zero_accuracy": 0.0,
+    "balance": 2.3453343130051434,
+    "bias": 0.0017833256861194968
+  },
+  "confusion_matrix": [
+    [
+      671,
+      0,
+      1663
+    ],
+    [
+      1,
+      0,
+      2
+    ],
+    [
+      689,
+      0,
+      1527
+    ]
+  ],
+  "model_metadata": null,
+  "evaluation_timestamp": "2025-05-02 13:52:56"
+}

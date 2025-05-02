@@ -1,0 +1,143 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Cursor Development Rules & AI Collaboration Guide for Quantitative Trading
+
+## 📜 Core Philosophy
+
+1.  **Accuracy & Correctness:** Prioritize mathematically sound, statistically valid, and demonstrably correct implementations above all else. Errors can have significant financial consequences.
+2.  **Reproducibility:** Ensure that research, backtests, and production trading results are fully reproducible through rigorous version control of code, data, parameters, and environments.
+3.  **Simplicity & Clarity:** Favor clear, understandable, and maintainable code, especially for complex algorithms and strategies. Avoid premature optimization or unnecessary complexity.
+4.  **Iterate & Validate:** Prefer iterating on validated components and strategies. Thoroughly backtest and validate changes before deployment.
+5.  **Focus:** Concentrate on the assigned task (e.g., feature engineering, model refinement, execution logic). Avoid unrelated modifications.
+6.  **Risk-Awareness:** Design and implement with risk management principles embedded from the start.
+7.  **Collaboration:** This document guides both human developers and the AI assistant for effective teamwork in a quant environment.
+
+## 📚 Project Context & Understanding
+
+1.  **Documentation First:**
+    *   **Always** review relevant project documentation *before* starting:
+        *   Strategy Descriptions / Whitepapers (Logic, assumptions, mathematical formulations)
+        *   Data Dictionaries (`docs/data_sources.md`: Source, cleaning, known issues)
+        *   `README.md` (Project overview, setup, tech stack, core libraries like NumPy, Pandas, Scikit-learn, Statsmodels, backtesting framework)
+        *   `docs/architecture.md` (Data pipelines, signal generation, order management, risk modules)
+        *   `docs/backtesting_protocol.md` (Standard procedures, metrics, validation)
+        *   `tasks/tasks.md` (Current development tasks)
+    *   If documentation is missing, unclear, or conflicts, **ask for clarification**.
+2.  **Architecture Adherence:**
+    *   Understand and respect module boundaries (data ingestion, feature calculation, signal generation, portfolio construction, execution, risk management).
+    *   Ensure changes comply with established data flow and component interactions.
+3.  **Pattern & Tech Stack Awareness:**
+    *   Utilize existing quantitative libraries (e.g., `numpy`, `pandas`, `scipy`, specific backtesting/trading libraries) and established patterns (vectorized calculations, time-series handling).
+    *   Justify proposals for new libraries or significant pattern changes based on clear performance or capability needs.
+
+## ⚙️ Task Execution & Workflow
+
+1.  **Task Definition:** Clearly understand task requirements from strategy docs and `tasks/tasks.md`, including expected metrics or validation criteria.
+2.  **Systematic Change Protocol:**
+    *   **Identify Impact:** Determine effects on data dependencies, downstream calculations, backtest results, and risk profiles.
+    *   **Plan:** Outline steps, focusing on logical units (e.g., implement feature, test feature, integrate feature).
+    *   **Validate:** Define how the change will be validated (unit tests, specific backtest scenario, statistical checks).
+3.  **Progress Tracking:** Keep `docs/status.md` and `tasks/tasks.md` updated.
+
+## 🤖 AI Collaboration & Prompting
+
+1.  **Clarity & Specificity:** Provide clear instructions, especially regarding mathematical formulas, data transformations, or desired statistical properties. Define constraints (e.g., "using vectorized pandas operations", "avoiding lookahead bias").
+2.  **Context Referencing:** Remind the AI of specific strategy logic, data nuances, or previous validation results when necessary.
+3.  **Suggest vs. Apply:** Use "Suggestion:" for code needing careful review (complex logic, math) and "Applying fix:" for more straightforward changes.
+4.  **Question AI Output:** Critically review AI-generated code, *especially* for mathematical correctness, numerical stability, handling of edge cases (NaNs, zeros), and potential lookahead bias. Verify logic.
+5.  **Focus the AI:** Guide the AI on specific parts (e.g., "refactor this data cleaning function", "implement the Sharpe ratio calculation", "add input validation to this module").
+6.  **Leverage Strengths:** Use AI for boilerplate, refactoring, test generation, documentation, and suggesting optimized implementations (e.g., vectorization). Maintain human oversight for core strategy logic, risk controls, and final validation.
+7.  **Incremental Interaction:** Break down complex algorithm implementations or backtest setups into smaller, verifiable steps.
+8.  **Standard Check-in (AI):** "Confirming understanding: Reviewed [strategy doc/data spec]. Goal is [task goal], ensuring [key constraint, e.g., numerical stability/no lookahead]. Proceeding with [planned step, e.g., implementing feature X using pandas]."
+
+## ✨ Code Quality & Style
+
+1.  **Numerical Stability:** Be mindful of potential issues like overflow, underflow, and loss of precision in floating-point arithmetic.
+2.  **Vectorization:** Prioritize vectorized operations (NumPy/Pandas) over explicit loops for performance on large datasets.
+3.  **Readability:** Write clean code. Use meaningful variable names. Document complex calculations or non-obvious logic with comments or docstrings. Include units or context where relevant (e.g., `volatility_annualized`).
+4.  **Small Files & Functions:** Keep functions focused on a single task. Aim for files under 300-400 lines; refactor complex strategies or data processing into logical modules.
+5.  **DRY (Don't Repeat Yourself):** Refactor common calculations or data manipulations into reusable functions or classes.
+6.  **Linting/Formatting:** Adhere to project's ESLint/Prettier/Black/Flake8 rules.
+7.  **Pattern Consistency:** Follow established patterns for data handling, signal calculation, and state management.
+8.  **File Naming:** Use descriptive names (e.g., `feature_engineering/momentum_indicators.py`, `strategies/mean_reversion_strategy.py`).
+
+## 🔢 Data Handling & Management
+
+1.  **Data Validation:** Implement checks for data integrity (e.g., NaNs, outliers, stale data, duplicates) upon ingestion and before use in models. Log issues.
+2.  **Missing Data:** Use consistent, documented strategies for handling missing data (e.g., forward-fill, interpolation, dropping). Understand the impact on the strategy.
+3.  **Time-Series Alignment:** Ensure rigorous handling of timestamps, timezones, and frequency alignment across different data sources. Be vigilant against lookahead bias during merges or joins.
+4.  **Feature Engineering:** Clearly document the calculation and assumptions behind derived features. Version control feature definitions.
+5.  **Data Versioning:** Where feasible, use tools or practices (like DVC or storing data hashes) to version datasets used for specific backtests or model training runs to ensure reproducibility.
+
+## 🧪 Backtesting & Simulation
+
+1.  **No Lookahead Bias:** **Critically** review code to ensure no future information leaks into calculations or decisions at a given point in time. Test for this specifically.
+2.  **Realistic Costs:** Implement and use realistic models for transaction costs, slippage, and potential market impact based on assumed liquidity.
+3.  **Robustness Checks:** Perform sensitivity analysis on key strategy parameters and assumptions (e.g., lookback windows, cost levels).
+4.  **Validation Protocol:** Adhere strictly to `docs/backtesting_protocol.md`, including use of in-sample/out-of-sample periods, walk-forward analysis, or cross-validation as defined.
+5.  **Metrics Reporting:** Consistently report a standard set of performance and risk metrics (e.g., CAGR, Sharpe, Sortino, Volatility, Max Drawdown, Calmar Ratio, Win Rate, PnL distribution).
+6.  **Benchmark Comparison:** Compare strategy performance against relevant market benchmarks.
+
+## 📈 Model Development & Validation
+
+1.  **Mathematical Correctness:** Double-check implementation of formulas and statistical methods against specifications or source material. Consider unit tests for core mathematical functions.
+2.  **Assumptions & Limitations:** Document the assumptions and known limitations of any models used.
+3.  **Overfitting Avoidance:** Employ techniques (regularization, cross-validation, simpler models) to mitigate overfitting during model training. Validate on unseen data.
+4.  **Monitoring:** Implement monitoring for live trading performance vs. backtested expectations. Investigate significant deviations.
+5.  **Periodic Review:** Establish a process for periodically reviewing and potentially retraining or recalibrating models based on performance and changing market conditions.
+
+## ⚡ Performance Optimization
+
+1.  **Profiling:** Use profiling tools to identify performance bottlenecks in data processing or calculation-intensive code *before* optimizing.
+2.  **Algorithm Choice:** Be mindful of the computational complexity (Big O notation) of algorithms, especially with large datasets or high-frequency updates.
+3.  **Memory Management:** Be aware of memory usage, particularly with large `pandas` DataFrames. Use efficient data types (`float32` instead of `float64` if precision allows) and techniques to release memory where possible.
+4.  **Targeted Optimization:** Focus optimization efforts on the most time-critical parts of the system (e.g., signal calculation loop, order book processing). Consider lower-level languages (Cython, C++, Numba) only if profiling shows significant gains are necessary and achievable.
+
+## 🛡️ Risk Management
+
+1.  **Embedded Controls:** Implement risk controls directly within the strategy logic or execution system (e.g., stop-losses, position size limits, diversification rules, max drawdown limits).
+2.  **Validation:** Explicitly test risk management logic during backtesting (e.g., ensure stops are triggered correctly, position limits are respected).
+3.  **Kill Switches:** Ensure mechanisms exist to halt trading activity quickly and safely, both automatically (based on risk breaches) and manually.
+4.  **Exposure Monitoring:** Implement tools or reports to monitor portfolio exposure across different assets, sectors, or risk factors.
+
+## ✅ Testing & Validation
+
+1.  **Unit Tests:** Write unit tests for critical components: mathematical functions, data transformations, signal calculations, risk rule implementations. Test edge cases (zeros, NaNs, empty data).
+2.  **Integration Tests:** Test interactions between components (e.g., data pipeline -> signal generation -> order placement).
+3.  **Backtest Verification:** Use simplified scenarios or known inputs to verify that the backtesting engine produces expected results.
+4.  **Reproducibility Tests:** Ensure that running the same code with the same data and parameters yields identical results.
+5.  **Tests Must Pass:** All relevant tests must pass before merging code or deploying changes.
+
+## 🐛 Debugging & Troubleshooting
+
+1.  **Data First:** When encountering unexpected results, first suspect and investigate data issues (alignment, quality, correctness).
+2.  **Numerical Precision:** Be aware of potential floating-point inaccuracies. Use appropriate comparisons (e.g., `numpy.isclose`) instead of direct equality checks for floats.
+3.  **Step-Through Logic:** For complex calculations or backtest discrepancies, meticulously step through the logic with sample data or debugging tools. Log intermediate values.
+4.  **Isolate Changes:** When debugging, try to isolate the effect of recent changes. Compare outputs before and after.
+5.  **Check `fixes/`:** Look for documented solutions to similar past numerical, data, or backtesting issues. Document new complex fixes.
+
+## 🔒 Security
+
+1.  **API Key Management:** Store exchange/broker/data provider API keys securely using environment variables, secrets management tools, or encrypted configurations. **Never** commit keys to version control.
+2.  **Algorithm Protection:** Be mindful of exposing proprietary algorithms. Restrict access to code repositories and production systems.
+3.  **Infrastructure Security:** Ensure trading systems run on secure, monitored infrastructure. Use firewalls and access controls appropriately.
+4.  **Input Validation:** Validate any external inputs (e.g., parameters from a UI, signals from external sources) before use.
+
+## 🌳 Version Control & Environment
+
+1.  **Git Hygiene:** Commit frequently with clear messages describing the change (e.g., "feat: Add RSI indicator calculation", "fix: Correct handling of NaNs in volatility"). Keep commits atomic.
+2.  **Version Everything:** Use Git to version control all code. Additionally, implement strategies (manual tracking, Git-LFS, DVC, specific parameter files) to version:
+    *   Key datasets used for backtests/training.
+    *   Model parameters and configurations.
+    *   Environment configurations (`requirements.txt`, `environment.yml`, Dockerfiles).
+3.  **Branching:** Follow the project's branching strategy (e.g., feature branches for development, main/master for stable releases).
+4.  **.env Files:** Never commit `.env` files. Use `.env.example`.
+5.  **Containerization (Recommended):** Use Docker or similar tools to define and manage consistent development, testing, and production environments, ensuring reproducibility.
+
+## 📄 Documentation Maintenance
+
+1.  **Update Docs:** If changes affect strategy logic, data sources, model parameters, architecture, or backtesting procedures, update the relevant documentation *concurrently* with the code changes.
+2.  **Keep Rules Updated:** Periodically review and update this `.cursorrules` file.

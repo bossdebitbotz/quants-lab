@@ -1,0 +1,60 @@
+{
+  "timestamp": "20250502_103335",
+  "model_type": "improved_tft",
+  "hyperparameters": {
+    "context_length": 10,
+    "prediction_length": 1,
+    "hidden_size": 128,
+    "num_attention_heads": 4,
+    "dropout": 0.1,
+    "learning_rate": 0.0001,
+    "batch_size": 16,
+    "max_epochs": 5
+  },
+  "feature_definitions": {
+    "static_categorical_cols": [],
+    "static_real_cols": [],
+    "temporal_categorical_cols": [],
+    "temporal_real_cols": [
+      "open",
+      "high",
+      "low",
+      "close",
+      "volume",
+      "bid_vol",
+      "ask_vol",
+      "imbalance",
+      "spread_mean",
+      "spread_pct_mean",
+      "new_bid_orders",
+      "new_ask_orders",
+      "canceled_bid_orders",
+      "canceled_ask_orders",
+      "executed_bid_orders",
+      "executed_ask_orders",
+      "buy_sell_imbalance",
+      "returns_10sec",
+      "returns_30sec",
+      "returns_1min",
+      "volatility_1min",
+      "sma_fast",
+      "sma_slow",
+      "trend_indicator",
+      "high_volatility",
+      "imbalance_change",
+      "cum_imbalance_1min",
+      "rsi_14"
+    ],
+    "target_col": "target"
+  },
+  "time_varying_embedding_sizes": [],
+  "best_val_loss": 5.945813441599057e-08,
+  "best_epoch": "04",
+  "test_results": {
+    "test_mae": 0.00022223366249818355,
+    "test_rmse": 0.00022525526583194733,
+    "test_bias": 0.00022213984630070627,
+    "test_direction_accuracy": 0.0,
+    "test_loss": 5.5831922196603045e-08
+  }
+}

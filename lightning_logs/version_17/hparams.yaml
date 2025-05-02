@@ -1,0 +1,8 @@
+context_length: 30
+dropout: 0.2
+hidden_size: 128
+learning_rate: 0.0005
+num_heads: 4
+prediction_length: 1
+static_features: 0
+time_varying_features: 21

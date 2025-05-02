@@ -1,0 +1,31 @@
+{
+  "metrics": {
+    "mae": 0.07227978855371475,
+    "rmse": 0.07431022822856903,
+    "r2": 0.0,
+    "bias": -0.07222665101289749,
+    "direction_accuracy": 0.0
+  },
+  "model_info": {
+    "context_length": 10,
+    "prediction_length": 1,
+    "timestamp": "2025-05-02T11:14:58.555441"
+  },
+  "data_info": {
+    "days": 2,
+    "handle_missing": "interpolate",
+    "total_samples": 17271
+  },
+  "trading_metrics": {
+    "total_trades": 17271,
+    "winning_trades": 0,
+    "losing_trades": 0,
+    "win_rate": 0.0,
+    "total_return": 0.0,
+    "avg_return_per_trade": 0.0,
+    "sharpe_ratio": 0.0,
+    "max_drawdown": 0.0,
+    "calmar_ratio": 0.0,
+    "profit_factor": Infinity
+  }
+}

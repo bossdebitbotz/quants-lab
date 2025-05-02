@@ -158,7 +158,7 @@ class CLOBDataSource:
         return await self.get_candles(connector_name, trading_pair, interval, start_time, end_time, from_trades)
 
     async def get_candles_batch_last_days(self, connector_name: str, trading_pairs: List, interval: str,
-                                          days: int, batch_size: int = 10, sleep_time: float = 2.0):
+                                          days: int, batch_size: int = 10, sleep_time: float = 5.0):
         number_of_calls = (len(trading_pairs) // batch_size) + 1
 
         all_candles = []
