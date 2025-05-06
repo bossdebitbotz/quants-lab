@@ -1,0 +1,14 @@
+{
+    "parameters": {
+        "days": 7,
+        "threshold": 0.002,
+        "position_sizing": false,
+        "output_dir": "backtest_results/simple_tft"
+    },
+    "metrics": {
+        "final_capital": NaN,
+        "return": NaN,
+        "sharpe_ratio": 0.0,
+        "total_trades": 3745
+    }
+}

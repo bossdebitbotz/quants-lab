@@ -1,0 +1,8 @@
+TFT Ensemble Model Backtest Report
+================================
+
+Total Trades: 280
+Win Rate: 53.93%
+Total Return: -2.70%
+Sharpe Ratio: -0.29
+Final Equity: 0.9730

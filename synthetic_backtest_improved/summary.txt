@@ -1,0 +1,20 @@
+=== Synthetic TFT Ensemble Backtest ===
+
+Data Period: 2025-04-26 13:17:00 to 2025-05-01 14:40:00
+Base Threshold: 0.003
+Synthetic Model Win Rate Target: 53.20%
+
+Total Trades: 3731
+Actual Win Rate: 0.03%
+Total Return: -59.99%
+Final Equity: 0.4001
+Sharpe Ratio: -5.55
+Average Trade Duration: 8.00 bars
+Average Return per Trade: -0.0000
+
+Trading Parameters:
+- Stop Loss: 0.20%
+- Take Profit: 0.40%
+- Max Holding Period: 8 bars
+- Position Sizing: Enabled
+- Transaction Fee: 0.0100% per trade

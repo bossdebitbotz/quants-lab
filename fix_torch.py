@@ -1,0 +1,1 @@
+import torch; torch.serialization.add_safe_globals(["lightning_fabric.utilities.data.AttributeDict"])

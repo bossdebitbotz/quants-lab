@@ -1,0 +1,10 @@
+{
+    "threshold": 0.002,
+    "total_trades": 4087,
+    "win_rate": 0.0014680694886224615,
+    "total_return": -0.6132145897341428,
+    "avg_return_per_trade": -3.0414592527151168e-05,
+    "sharpe_ratio": -5.748680019628537,
+    "avg_trade_duration": 7.999021287007585,
+    "final_equity": 0.3867854102658572
+}

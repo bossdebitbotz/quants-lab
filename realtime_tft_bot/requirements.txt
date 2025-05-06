@@ -1,0 +1,18 @@
+# Core dependencies
+torch==2.1.0
+pytorch-lightning>=2.0.0
+pandas==2.0.3
+numpy==1.25.2
+python-dotenv==1.0.0
+matplotlib==3.7.2
+seaborn==0.12.2
+
+# Networking
+aiohttp==3.8.5
+websockets==11.0.3
+
+# Database
+psycopg2-binary==2.9.9
+
+# Binance API (for live trading)
+python-binance==1.0.17 

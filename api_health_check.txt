@@ -1,0 +1,1 @@
+{"models_loaded":["default","directional","downward"],"status":"healthy","timestamp":"2025-05-03T03:03:57.032892"}

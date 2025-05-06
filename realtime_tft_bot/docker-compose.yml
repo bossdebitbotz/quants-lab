@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  tft_bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: realtime_tft_bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ../models:/app/models
+    networks:
+      - tft_bot_network
+      - backtest_network
+    # Connect to host if needed
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # Database setup (just runs schema if needed, then exits)
+  tft_bot_db_setup:
+    image: postgres:14
+    container_name: tft_bot_db_setup
+    restart: "no"
+    command: >
+      bash -c "
+        echo 'Waiting for database to be ready...' &&
+        until PGPASSWORD=$${POSTGRES_PASSWORD} psql -h $${DB_HOST} -p $${DB_PORT} -U $${POSTGRES_USER} -d $${POSTGRES_DB} -c 'SELECT 1' > /dev/null 2>&1; do
+          echo 'Waiting for database...' &&
+          sleep 2;
+        done &&
+        echo 'Database is ready! Running schema setup...' &&
+        PGPASSWORD=$${POSTGRES_PASSWORD} psql -h $${DB_HOST} -p $${DB_PORT} -U $${POSTGRES_USER} -d $${POSTGRES_DB} -f /schema/tftbot_schema_fixed.sql &&
+        echo 'Schema setup complete!'
+      "
+    environment:
+      - POSTGRES_USER=${DB_USER:-backtest_user}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-backtest_password}
+      - POSTGRES_DB=${DB_NAME:-backtest_db}
+      - DB_HOST=${DB_HOST:-localhost}
+      - DB_PORT=${DB_PORT:-5441}
+    volumes:
+      - ../database_setup:/schema
+    networks:
+      - tft_bot_network
+    # If connecting to database running on the host
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  tft_bot_network:
+    driver: bridge
+  # Reference to the existing network where TimescaleDB is running
+  backtest_network:
+    external: true
+    name: quants-lab_default 

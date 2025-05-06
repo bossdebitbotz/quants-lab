@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  hummingbot:
+    image: hummingbot/hummingbot:latest
+    container_name: hummingbot
+    volumes:
+      - ./hummingbot/conf:/home/hummingbot/conf
+      - ./hummingbot/logs:/home/hummingbot/logs
+      - ./hummingbot/data:/home/hummingbot/data
+      - ./hummingbot/scripts:/home/hummingbot/scripts
+      - ./hummingbot/hummingbot/strategy/tft_strategy:/home/hummingbot/hummingbot/strategy/tft_strategy
+      - ./hummingbot/hummingbot/templates:/home/hummingbot/hummingbot/templates
+    network_mode: host
+    tty: true
+    stdin_open: true
+    environment:
+      - HUMMINGBOT_AUTO_LOGIN=true
+    command: >
+      bash -c "cd /home/hummingbot && 
+      pip install hexbytes requests && 
+      python -c 'open(\"/home/hummingbot/conf/conf_client.yml\", \"a\").write(\"\npassword_required: false\n\")' &&
+      tail -f /dev/null"

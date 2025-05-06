@@ -1,0 +1,16 @@
+total 120
+drwxr-xr-x  15 derekburns  staff   480 May  2 22:59 .
+drwxr-xr-x  19 derekburns  staff   608 May  2 21:46 ..
+-rw-r--r--   1 derekburns  staff  2556 May  2 18:53 conf_amm_arb_strategy_TEMPLATE.yml
+-rw-r--r--   1 derekburns  staff   536 May  2 18:53 conf_amm_v3_lp_strategy_TEMPLATE.yml
+-rw-r--r--   1 derekburns  staff  4463 May  2 18:53 conf_fee_overrides_TEMPLATE.yml
+-rw-r--r--   1 derekburns  staff  2001 May  2 18:53 conf_liquidity_mining_strategy_TEMPLATE.yml
+-rw-r--r--   1 derekburns  staff  3908 May  2 18:53 conf_perpetual_market_making_strategy_TEMPLATE.yml
+-rw-r--r--   1 derekburns  staff  5161 May  2 18:53 conf_pure_market_making_strategy_TEMPLATE.yml
+-rw-r--r--   1 derekburns  staff  1569 May  2 18:53 conf_spot_perpetual_arbitrage_strategy_TEMPLATE.yml
+-rw-r--r--   1 derekburns  staff   376 May  2 23:04 conf_tft_ensemble_strategy_TEMPLATE.yml
+-rw-r--r--   1 derekburns  staff   376 May  2 23:04 conf_tft_ensemble_strategy_strategy_TEMPLATE.yml
+-rw-r--r--   1 derekburns  staff   277 May  2 23:04 conf_tft_strategy_TEMPLATE.yml
+-rw-r--r--   1 derekburns  staff   277 May  2 23:04 conf_tft_strategy_strategy_TEMPLATE.yml
+-rw-r--r--   1 derekburns  staff  1344 May  2 18:53 conf_twap_strategy_TEMPLATE.yml
+-rwxr-xr-x   1 derekburns  staff  2159 May  2 18:53 hummingbot_logs_TEMPLATE.yml
